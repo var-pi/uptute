@@ -74,7 +74,7 @@
     "header": {
       "lesson": {
         "title": "Tund",
-        "learn": "Õppi",
+        "learn": "Õpi",
         "teach": "Õpeta"
       },
       "notifications": {
@@ -249,7 +249,8 @@
       "hours": "õpetamiskogemus",
       "comments": "kommentaaride arv",
       "fail": {
-        "init": "Tunni päringu loomine ebaõnnestus",
+        "init": "Andmebaas pole hetkel ühendatud. Tunni saamise protsess demonstreeritakse UPT kaitsmisel.",
+        "_comment": "UPT. Change init back to: Tunni päringu loomine ebaõnnestus",
         "offers": "Tunni pakkumiste hankimine ebaõnnestus",
         "reject": "Tunni pakkumise tagasilükkamine ebaõnnestus",
         "accept": "Pakkumise vastuvõtmine ebaõnnestus",
@@ -271,7 +272,8 @@
         "conference": "Koosoleku alsutamine ebaõnnestus",
         "cancel": "Tunni pakkumise tühistamine ebaõnnestus",
         "listen_accept": "Pakkumise vastuvõtu kontroll ebaõnnestus",
-        "lessons": "Tundide hankimine serverilt ebaõnnestus",
+        "lessons": "Andmebaas pole hetkel ühendatud. Tunni pakkuimse protsess demonstreeritakse UPT kaitsmisel.",
+        "_comment": "UPT. Change lessons back to: Tundide hankimine serverilt ebaõnnestus",
         "send": "Tunni pakkumise saatmine ebaõnnestus"
       }
     }

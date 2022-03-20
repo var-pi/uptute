@@ -26,6 +26,7 @@
             }`
           "
           :convertor="(item) => $l('find.filters.filters.' + item.name)"
+          borderRadius="15px"
         />
       </FilterPanel>
       <Panels id="panels" :tutors="getTutors()" />

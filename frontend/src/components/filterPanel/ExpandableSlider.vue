@@ -5,6 +5,7 @@
     :text="text"
     :backgroundColor="backgroundColor"
     :borderRadius="borderRadius"
+    :flat="flat"
   >
     <div id="wrapper">
       <v-range-slider
@@ -54,6 +55,7 @@ export default {
     "min",
     "max",
     "backgroundColor",
+    "flat",
     "borderRadius",
   ],
   methods: {

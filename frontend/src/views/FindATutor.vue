@@ -138,16 +138,16 @@ export default {
   data() {
     return {
       info: {
-        name: "Hardcoded", // Pull from account !!!!
+        name: "Someone", // Pull from account !!!!
         grade: 12, //Pull from account !!!!
-        subject: "null", // null
+        subject: null, // null
         topic: {
-          title: "null",
-          text: "null",
+          title: "",
+          text: "",
         },
 
         // ----------------- this are going to be checked but not rendered
-        languages: ["EN"], // ["EN"]
+        languages: [], // ["EN"]
         age: [15, 100],
         price: [0, 150],
         // -----------------

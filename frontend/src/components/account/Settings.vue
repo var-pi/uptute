@@ -2,7 +2,8 @@
   <div id="container">
     <Subheader :title="$l('acc_pages.settings')" />
     <PrimarySettings />
-    <SecondarySettings v-if="getStatus === 'TUTOR'" />
+    <SecondarySettings />
+    <!-- v-if="getStatus === 'TUTOR'" -->
     <!-- bind status!! -->
     <v-btn id="save" rounded outlined color="accent">
       {{ $l("settings.save") }}</v-btn

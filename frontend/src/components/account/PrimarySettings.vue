@@ -25,6 +25,7 @@
         :label="$l('set_up.birth')"
         :text="birthday"
         :rules="(item) => item != null"
+        borderRadius="15px 15px 0px 0px"
       />
       <ExpandableSlider
         v-model="grade"
@@ -32,6 +33,7 @@
         :text="grade"
         :min="1"
         :max="12"
+        borderRadius="0px 0px 15px 15px"
       />
     </FilterPanel>
   </div>

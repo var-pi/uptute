@@ -1,5 +1,11 @@
 <template>
-  <BaseComponent ref="base" :label="label" :text="text">
+  <BaseComponent
+    ref="base"
+    :label="label"
+    :text="text"
+    :borderRadius="borderRadius"
+    :flat="flat"
+  >
     <v-menu
       class="menu"
       ref="menu"
@@ -52,7 +58,15 @@ export default {
       def: JSON.parse(JSON.stringify(this.value)),
     };
   },
-  props: ["value", "label", "text", "convertor", "rules"],
+  props: [
+    "value",
+    "label",
+    "text",
+    "convertor",
+    "rules",
+    "flat",
+    "borderRadius",
+  ],
   methods: {
     refresh,
     isValid,

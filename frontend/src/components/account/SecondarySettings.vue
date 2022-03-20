@@ -54,6 +54,7 @@
         :convertor="(item) => $l('data.subjects.' + item)"
         :searchLabel="$l('find.filters.subject.search')"
         :rules="(item) => item.length > 0"
+        borderRadius="15px 15px 0px 0px"
       />
       <ExpandableSlider
         v-model="audience"
@@ -61,6 +62,7 @@
         :text="audience.join(' - ')"
         :min="1"
         :max="12"
+        borderRadius="0px"
       />
       <ExpandableListSelector
         v-model="languages"
@@ -70,6 +72,7 @@
         :convertor="(item) => $l('data.languages.' + item)"
         :multiple="true"
         :rules="(item) => item.length > 0"
+        borderRadius="0px 0px 15px 15px"
       />
     </FilterPanel>
   </div>

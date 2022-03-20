@@ -5,6 +5,7 @@
     :label="label"
     :text="text"
     :flat="flat"
+    :borderRadius="borderRadius"
   >
     <div
       class="filter"
@@ -38,7 +39,16 @@ export default {
       def: JSON.parse(JSON.stringify(this.value)),
     };
   },
-  props: ["value", "filters", "label", "text", "convertor", "rules", "flat"],
+  props: [
+    "value",
+    "filters",
+    "label",
+    "text",
+    "convertor",
+    "rules",
+    "flat",
+    "borderRadius",
+  ],
   methods: {
     change(item) {
       if (this.input.name == item.name)

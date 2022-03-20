@@ -246,7 +246,8 @@
       "hours": "hours taught",
       "comments": "number of comments",
       "fail": {
-        "init": "Failed to create a lesson request",
+        "init": "Database is currently not attached. The process of getting a lesson will be shown during the UPT presentation.",
+        "_comment": "UPT. Change init back to: Failed to create a lesson request",
         "offers": "Failed to get offers",
         "reject": "Failed to reject the offer",
         "accept": "Failed to accept an offer",
@@ -268,7 +269,8 @@
         "conference": "Failed to start a conference",
         "cancel": "Failed to cancel the offer",
         "listen_accept": "Failed to listen for accepted",
-        "lessons": "Failed to get lessons from a server",
+        "lessons": "Database is currently not attached. The process of offering a lesson will be shown during the UPT presentation.",
+        "_comment": "UPT. Change lessons back to: Failed to get lessons from a server",
         "send": "Failed to send a lessons offer"
       }
     }
