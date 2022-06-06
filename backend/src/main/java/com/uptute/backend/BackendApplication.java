@@ -6,7 +6,7 @@ package com.uptute.backend;
 // import com.uptute.backend.entities.Accaunt;
 import com.uptute.backend.entities.Role;
 import com.uptute.backend.enums.ERole;
-import com.uptute.backend.repositories.AccountRepository;
+import com.uptute.backend.repositories.UserRepository;
 import com.uptute.backend.repositories.RoleRepository;
 
 // import org.slf4j.Logger;
@@ -31,7 +31,7 @@ public class BackendApplication {
 	}
 
 	@Bean
-	public CommandLineRunner demo(AccountRepository accauntRepository, RoleRepository roleRepository) {
+	public CommandLineRunner demo(UserRepository accauntRepository, RoleRepository roleRepository) {
 		return (args) -> {
 			if (roleRepository.count() == 0)
 				for (var role : ERole.values())

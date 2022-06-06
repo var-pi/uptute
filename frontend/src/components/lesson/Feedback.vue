@@ -9,7 +9,7 @@
         id="textField"
         :label="$l('lesson.feedback.comment')"
         :area="true"
-        :flat="true"
+        :flat="false"
       />
       <v-btn rounded outlined color="accent">Send</v-btn>
     </template>

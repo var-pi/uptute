@@ -57,11 +57,11 @@ export default {
   },
 
   mounted() {
-    this.$nextTick(() => {
+    setTimeout(() => {
       document.styleSheets[0].insertRule(`:root{
       --tooltipBackground: ${this.tooltipBackground};
       }`);
-    });
+    }, 0);
   },
 };
 </script>
@@ -123,3 +123,4 @@ $card-rows-margin: 5px;
   }
 }
 </style>
+

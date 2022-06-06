@@ -3,19 +3,19 @@
     <table>
       <tr>
         <th>{{ $l("find.filters.subject.h") }}</th>
-        <td>Maths</td>
+        <td>{{ $l(`data.subjects.${lesson.subject}`) }}</td>
       </tr>
       <tr>
         <th>{{ $l("find.filters.language.h") }}</th>
-        <td>English, Esonian</td>
+        <td>{{ getLangStr() }}</td>
       </tr>
       <tr>
         <th>{{ $l("find.filters.price.h") }}</th>
-        <td>3.00 - 6.00 $/h</td>
+        <td>{{ lesson.price[0] }} - {{ lesson.price[1] }} UC/h</td>
       </tr>
       <tr>
         <th>{{ $l("find.filters.tutor_age.h") }}</th>
-        <td>16 - 18 y.o.</td>
+        <td>{{ lesson.age[0] }} - {{ lesson.age[1] }} y.o.</td>
       </tr>
     </table>
   </InfoCardBase>
@@ -30,6 +30,18 @@ export default {
   },
   props: {
     radius: String,
+  },
+  computed: {
+    lesson: function () {
+      return this.$store.state["lesson/student"].info;
+    },
+  },
+  methods: {
+    getLangStr() {
+      let arr = this.lesson.languages;
+      arr = arr.map((abbr) => this.$l(`data.languages.${abbr}`));
+      return arr.join(", ");
+    },
   },
 };
 </script>

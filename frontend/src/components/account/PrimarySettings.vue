@@ -4,36 +4,42 @@
       <img :src="img.imageUrl" alt="" />
       <input type="file" accept="image/*" @change="addImg" />
     </label>
-    <FilterPanel ref="panel" @next="(action) => $refs.panel2[action]()">
+    <FilterPanel
+      class="inputPanel"
+      ref="panel"
+      @next="(action) => $refs.panel2[action]()"
+    >
       <TextField
-        v-model="name"
+        v-model="data.firstName"
+        :counter="name.length"
         :label="$l('set_up.name')"
-        :rules="(val) => val != '' && val != null"
+        :rules="(v) => ifPassesRules({ v, title: 'name' })"
         :borderRadius="'15px 15px 0px 0px'"
+        :flat="false"
+        :errMsg="name.errMsg"
+        required
       />
+
       <TextField
-        v-model="surname"
+        v-model="data.lastName"
+        :counter="surname.length"
         :label="$l('set_up.surname')"
-        :rules="(val) => val != '' && val != null"
+        :rules="(v) => ifPassesRules({ v, title: 'surname' })"
         :borderRadius="'0px 0px 15px 15px'"
+        :flat="false"
+        :errMsg="surname.errMsg"
+        required
       />
     </FilterPanel>
 
-    <FilterPanel ref="panel2">
+    <FilterPanel class="inputPanel" ref="panel2">
       <ExpandableCalendar
-        v-model="birthday"
+        v-model="data.birthday"
         :label="$l('set_up.birth')"
-        :text="birthday"
+        :text="data.birthday"
         :rules="(item) => item != null"
-        borderRadius="15px 15px 0px 0px"
-      />
-      <ExpandableSlider
-        v-model="grade"
-        :label="$l('set_up.grade')"
-        :text="grade"
-        :min="1"
-        :max="12"
-        borderRadius="0px 0px 15px 15px"
+        borderRadius="15px"
+        :flat="false"
       />
     </FilterPanel>
   </div>
@@ -42,14 +48,13 @@
 <script>
 import FilterPanel from "@/components/filterPanel/FilterPanel.vue";
 import ExpandableCalendar from "@/components/filterPanel/ExpandableCalendar.vue";
-import ExpandableSlider from "@/components/filterPanel/ExpandableSlider.vue";
 import TextField from "@/components/filterPanel/TextField";
+import { ruleBase } from "@/plugins/GlobalMethods.js";
 
 export default {
   components: {
     FilterPanel,
     ExpandableCalendar,
-    ExpandableSlider,
     TextField,
   },
   data() {
@@ -59,13 +64,29 @@ export default {
         imageUrl:
           "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9tbe0h9I_HCaMS2lyCsdTRXmznpSg9Rn5iA&usqp=CAU",
       },
-      name: "",
-      surname: "",
-      birthday: null,
-      grade: 1,
+      // birthday: null, //"2003-07-24"
+      // grade: null, //12
+      maxLength: 20,
+      minLength: 3,
+      name: {
+        length: 0,
+        errMsg: "",
+      },
+      surname: {
+        length: 0,
+        errMsg: "",
+      },
     };
   },
+  props: {
+    data: {
+      type: Object,
+    },
+  },
   methods: {
+    // ruleBase(params) {
+    //   return ruleBase(params);
+    // },
     addImg(e) {
       const file = e.target.files[0];
 
@@ -73,6 +94,54 @@ export default {
         image: file,
         imageUrl: URL.createObjectURL(file),
       };
+    },
+    ifPassesRules({ v, title }) {
+      const self = this;
+      this[title].errMsg = "";
+
+      const ifNotNull = (v) =>
+        rule({
+          condition: !!v,
+          pathEnd: `${title}.require`,
+        });
+
+      const ifNoSpaces = (v) =>
+        rule({
+          condition: v.indexOf(" ") < 0,
+          pathEnd: `no_spaces`,
+        });
+
+      const ifMoreThanMin = (v) =>
+        rule({
+          condition: v.length >= this.minLength,
+          pathEnd: `${title}.length.min`,
+          lParams: {
+            n: this.minLength,
+          },
+        });
+
+      const ifLessThanMax = (v) =>
+        rule({
+          condition: v.length <= this.maxLength,
+          pathEnd: `${title}.length.max`,
+          lParams: {
+            n: this.maxLength,
+          },
+        });
+
+      return (
+        ifNotNull(v) && ifNoSpaces(v) && ifMoreThanMin(v) && ifLessThanMax(v)
+      );
+
+      function rule({ condition, pathEnd, lParams }) {
+        return ruleBase({
+          self,
+          title,
+          condition,
+          pathEnd,
+          lParams,
+        });
+      }
     },
     async isValid() {
       await this.$refs.panel.isValid();

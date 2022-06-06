@@ -128,7 +128,8 @@ import Background from "@/components/global/background/Background.vue";
 import BackgroundCard from "@/components/global/background/BackgroundCard.vue";
 export default {
   permisions: {
-    roles: "ALL",
+    roles: ["ROLE_STUDENT"],
+    redirect: "LogIn",
   },
   components: {
     Background,
@@ -498,3 +499,4 @@ table {
   }
 }
 </style>
+

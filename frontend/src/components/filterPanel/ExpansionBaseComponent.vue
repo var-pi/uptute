@@ -1,26 +1,24 @@
 <template>
-  <v-expansion-panels class="panels">
-    <v-expansion-panel
-      ref="panel"
-      class="panel"
-      :class="{ errorMovement: errorAnim }"
-      :style="
-        `--displayShadow: ${flat ? 'none' : 'flex'};
+  <v-expansion-panel
+    ref="panel"
+    class="panel"
+    :class="{ errorMovement: errorAnim }"
+    :style="
+      `--displayShadow: ${flat ? 'none' : 'flex'};
         --backgroundColor: ${backgroundColor};
         --borderRadius: ${borderRadius}`
-      "
-    >
-      <v-expansion-panel-header hover="false" :class="{ errorColor: error }">
-        {{ label }}
-        <div class="text-right mr-3 secondary--text text--darken-2">
-          {{ text }}
-        </div>
-      </v-expansion-panel-header>
-      <v-expansion-panel-content id="expPanelContent">
-        <slot />
-      </v-expansion-panel-content>
-    </v-expansion-panel>
-  </v-expansion-panels>
+    "
+  >
+    <v-expansion-panel-header hover="false" :class="{ errorColor: error }">
+      {{ label }}
+      <div class="text-right mr-3 secondary--text text--darken-2">
+        {{ text }}
+      </div>
+    </v-expansion-panel-header>
+    <v-expansion-panel-content id="expPanelContent">
+      <slot />
+    </v-expansion-panel-content>
+  </v-expansion-panel>
 </template>
 
 <script>
@@ -61,6 +59,7 @@ export default {
   &::before {
     @include box-shadow();
     display: var(--displayShadow);
+    content: "";
     z-index: -1;
   }
   border-radius: var(--borderRadius) !important;
@@ -82,3 +81,4 @@ export default {
   }
 }
 </style>
+

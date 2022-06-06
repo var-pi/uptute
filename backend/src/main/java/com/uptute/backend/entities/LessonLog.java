@@ -56,6 +56,7 @@ public class LessonLog {
     private String createdBy;
 
     @NonNull
+    @Setter
     private String details;
 
 

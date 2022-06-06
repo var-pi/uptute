@@ -18,7 +18,6 @@
           --transformOrigin: ${transformOrigin};
           --rightDistance: ${rightDistance}px;
           --padding: ${padding};
-
          `
         "
         v-bind="attrs"
@@ -215,3 +214,4 @@ div.title {
   }
 }
 </style>
+

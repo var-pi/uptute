@@ -82,6 +82,7 @@ export default {
   color: var(--v-accent-base);
   font-size: 20px;
   padding: 4.78px !important;
+  padding-right: 10px !important;
   border-radius: 50%;
   transform: translateX(0px);
 }
@@ -98,3 +99,4 @@ span {
   color: inherit !important;
 }
 </style>
+

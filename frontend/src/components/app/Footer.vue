@@ -6,8 +6,11 @@
           <div id="container-text">
             <h3>{{ $l("app.footer.pages_title") }}</h3>
             <ul>
-              <li v-for="page in pages" :key="page.index">
-                <router-link class="link" :to="{ name: page.route }">
+              <li v-for="page in checkRoles(pages)" :key="page.index">
+                <router-link
+                  class="link"
+                  :to="{ path: '/' + $route.params.locale + page.route }"
+                >
                   {{ $l("app.pages." + page.name) }}
                 </router-link>
               </li>
@@ -28,9 +31,7 @@
           </div>
           <div id="container-reference">
             Icons made by
-            <a href="https://www.freepik.com" title="Freepik">
-              Freepik
-            </a>
+            <a href="https://www.freepik.com" title="Freepik"> Freepik </a>
             from
             <a href="https://www.flaticon.com/" title="Flaticon">
               www.flaticon.com
@@ -46,8 +47,6 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-
 export default {
   data() {
     return {
@@ -62,14 +61,34 @@ export default {
         },
       ],
       pages: [
-        { name: "home", route: "Home" },
-        { name: "terms", route: "TermsOfUse" },
-        { name: "privacy_policy", route: "PrivacyPolicy" },
+        { name: "home", route: "/home", roles: ["ALL"] },
+        { name: "log_in", route: "/log_in", roles: ["NONE"] },
+        { name: "register", route: "/register", roles: ["NONE"] },
+        {
+          name: "find_a_tutor",
+          route: "/find_a_tutor",
+          roles: ["ROLE_STUDENT"],
+        },
+        {
+          name: "choose_a_student",
+          route: "/choose_a_student",
+          roles: ["ROLE_TUTOR"],
+        },
+        {
+          name: "account.settings",
+          route: "/account/settings",
+          roles: ["ROLE_STUDENT"],
+        },
+        { name: "terms", route: "/terms_of_use", roles: ["ALL"] },
+        { name: "privacy_policy", route: "/privacy_policy", roles: ["ALL"] },
       ],
     };
   },
-  computed: mapGetters(["getStatus"]),
-
+  computed: {
+    roles: function () {
+      return this.$store.getters["auth/roles"];
+    },
+  },
   async mounted() {
     const footer = this.$refs.footer;
     const wrapper = this.$refs.wrapper;
@@ -77,19 +96,23 @@ export default {
       footer.style.height = wrapper.offsetHeight + "px";
     }).observe(wrapper);
   },
-  beforeMount() {
-    // if (!this.getStatus) {
-    //   this.pages.splice(1, 0, { name: "register", route: "Register" });
-    // } else {
-
-    // }
-    this.pages.splice(1, 0, { name: "find_tutor", route: "FindATutor" });
+  methods: {
+    checkRoles(pages) {
+      return pages.filter((page) => ifShow(this, page));
+      function ifShow(self, page) {
+        if (
+          page.roles.includes("ALL") ||
+          page.roles.includes("NONE" && self.roles.length == 0) ||
+          page.roles.some((role) => self.roles.includes(role))
+        )
+          return true;
+        return false;
+      }
+    },
+    //   scrollToBottom() {
+    //     window.scrollTo({ top: document.body.scrollHeight });
+    //   },
   },
-  // methods: {
-  //   scrollToBottom() {
-  //     window.scrollTo({ top: document.body.scrollHeight });
-  //   },
-  // },
 };
 </script>
 
@@ -164,3 +187,4 @@ export default {
   }
 }
 </style>
+

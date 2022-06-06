@@ -1,21 +1,25 @@
 <template>
   <div class="content">
     <p>
-      {{ student.topic ? student.topic.text : null }}
+      {{ student.details.details || null }}
     </p>
 
-    <PageViewer :imgs="student.imgs" :upload="false" />
+    <PageViewer
+      v-if="student.details.imgs && student.details.imgs.length > 0"
+      :imgs="student.imgs"
+      :upload="false"
+    />
 
     <Dialog>
       <template v-slot:object>
         <v-btn
-          @click="state === 'offered' ? cancelOffer() : sendOffer()"
+          @click="isOffered ? cancelOffer() : sendOffer()"
           rounded
           outlined
           color="accent"
         >
           {{
-            state === "offered"
+            isOffered
               ? $l("choose_a.student.dialog.cancel")
               : $l("choose_a.student.dialog.offer")
           }}
@@ -40,7 +44,6 @@ import PageViewer from "@/components/global/PageViewer.vue";
 export default {
   data() {
     return {
-      state: "notOffered",
       imgs: [
         {
           name: "physics1.jpg",
@@ -60,6 +63,11 @@ export default {
       ],
     };
   },
+  computed: {
+    isOffered: function () {
+      return this.$store.state["lesson/tutor"].offeredLessons.length > 0;
+    },
+  },
   props: ["student"],
   components: {
     Dialog,
@@ -72,20 +80,14 @@ export default {
         logId: this.student.logId,
       };
 
-      const offerLogId = await this.$store.dispatch(
-        "tutorLessonAPI/sendOffer",
-        {
-          lesson: lessonIdAndLogId,
-        }
-      );
-      this.offerLogId = offerLogId;
-      this.state = "offered";
+      this.$store.dispatch("lesson/tutor/sendOffer", {
+        lesson: lessonIdAndLogId,
+      });
     },
     cancelOffer() {
-      this.$store.dispatch("tutorLessonAPI/cancelOffer", {
-        offerLogId: this.offerLogId,
+      this.$store.dispatch("lesson/tutor/cancelOffer", {
+        offerLogId: this.student.offerLogId,
       });
-      this.state = "canceled";
     },
   },
 };

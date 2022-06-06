@@ -16,13 +16,24 @@ export default {
     async isValid() {
       if (this.inProgress) return;
       this.inProgress = true;
-      let val = true;
-      for (const el of this.$refs.panel.$children) {
+      var val = true;
+
+      const inputFields = this.$refs.panel.$children.filter(
+        (el) => !el.$el.classList.contains("notInput")
+      );
+
+      for (const el of inputFields) {
         if (!el.isValid()) val = false;
         await new Promise((res) => setTimeout(res, 100));
       }
-      if ((await this.$emit("next", "isValid")) === false) val = false;
-      if (!val) await new Promise((res) => setTimeout(res, 1100));
+      var nextValPromise = Promise;
+
+      this.$emit("next", "isValid", (r) => (nextValPromise = r));
+
+      var bool = await Promise.resolve(nextValPromise);
+      if (bool == false) val = false;
+      // if (!val) await new Promise((res) => setTimeout(res, 300));
+
       this.inProgress = false;
 
       return val;
@@ -42,3 +53,4 @@ export default {
   border-radius: 15px;
 }
 </style>
+

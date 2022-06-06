@@ -3,6 +3,9 @@ server:
   servlet:
     contextPath: /api
 spring:
+  mvc:
+    format:
+      date: yyyy-MM-dd
   datasource:
     url: jdbc:postgresql://localhost:5432/uptute
     username: postgres
@@ -20,7 +23,8 @@ uptute:
     jwtExpirationMs: 3600000
     jwtRefreshExpirationMs: 86400000
     logsExpirationMs:
-      created: 100000
-      offer: 50000
-      accepted: 50000
+      created: 1200000
+      offer: 600000
+      accepted: 600000
       init: 600000
+

@@ -12,9 +12,6 @@
 
     <template v-slot:text>
       {{ $l("booking.dialog.text") }}
-      <a target="_blank" :href="link">
-        {{ $l("booking.dialog.here") }}
-      </a>
     </template>
   </Dialog>
 </template>
@@ -32,8 +29,10 @@ export default {
   },
   methods: {
     acceptOffer() {
-      this.$store.dispatch("studentLessonAPI/accept", {
-        offerLogId: this.tutor.offerLogId,
+      console.log("!!!");
+      console.log(this.tutor);
+      this.$store.dispatch("lesson/student/accept", {
+        offerLogId: this.tutor.offerLog,
       });
     },
   },

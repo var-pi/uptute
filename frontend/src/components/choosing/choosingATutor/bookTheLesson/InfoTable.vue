@@ -2,7 +2,7 @@
   <table>
     <tr>
       <th>{{ $l("find.filters.subject.h") }}</th>
-      <td>Maths</td>
+      <td>{{ $l(`data.subjects.${lesson.subject}`) }}</td>
       <td></td>
     </tr>
     <tr>
@@ -12,13 +12,11 @@
     </tr>
     <tr>
       <th>{{ $l("find.filters.price.h") }}</th>
-      <td>{{ pph }} UC/{{ $l("tutor.hour") }}</td>
+      <td>{{ tutor.details.pph }} UC/{{ $l("tutor.hour") }}</td>
       <td>
         <v-tooltip content-class="tooltip" right>
           <template v-slot:activator="{ on, attrs }">
-            <div id="priceQuestionMark" v-bind="attrs" v-on="on">
-              ?
-            </div>
+            <div id="priceQuestionMark" v-bind="attrs" v-on="on">?</div>
           </template>
           <span>{{ $l("booking.tooltip") }} </span>
         </v-tooltip>
@@ -36,6 +34,11 @@ export default {
   },
   props: {
     tutor: Object,
+  },
+  computed: {
+    lesson: function () {
+      return this.$store.state["lesson/student"].info;
+    },
   },
   created() {
     this.pph = Math.round(this.tutor.pph);

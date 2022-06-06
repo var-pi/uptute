@@ -9,6 +9,7 @@
       --borderRadius: ${borderRadius}`
     "
   >
+    <!-- :rules="rules(input)" -->
     <div
       class="slot"
       ref="slot"
@@ -32,6 +33,14 @@
       />
       <label>{{ label }}</label>
       <img v-if="img" :src="getImg(img)" alt="" />
+
+      <div
+        v-bind:class="{ visible: ifErrMsgVisible() }"
+        ref="errMsg"
+        id="errMsg"
+      >
+        {{ errMsgUsed }}
+      </div>
     </div>
   </div>
 </template>
@@ -45,6 +54,7 @@ export default {
       errorAnim: false,
       input: this.value,
       def: JSON.parse(JSON.stringify(this.value ?? "")),
+      errMsgUsed: "",
     };
   },
   props: {
@@ -65,6 +75,22 @@ export default {
       type: String,
       default: "15px",
     },
+    errMsg: {
+      type: String,
+      default: "",
+    },
+  },
+  mounted() {
+    const self = this;
+    this.$refs.errMsg.addEventListener("transitionstart", transitionStart);
+    this.$refs.errMsg.addEventListener("transitionend", transitionEnd);
+
+    function transitionStart() {
+      if (self.ifErrMsgVisible()) self.errMsgUsed = self.errMsg;
+    }
+    function transitionEnd() {
+      if (!self.ifErrMsgVisible()) self.errMsgUsed = self.errMsg;
+    }
   },
   watch: {
     input: function(val) {
@@ -95,6 +121,20 @@ export default {
     getImg(img) {
       return require(`@/assets/icons/${img}.svg`);
     },
+    ifErrMsgVisible() {
+      const self = this;
+
+      return !ifEmpty() && !ifReplaceErr();
+
+      function ifEmpty() {
+        return !self.errMsg || self.errMsg.length == 0;
+      }
+      function ifReplaceErr() {
+        return self.errMsg == "" || self.errMsgUsed == ""
+          ? false
+          : self.errMsg != self.errMsgUsed;
+      }
+    },
   },
 };
 </script>
@@ -121,6 +161,15 @@ export default {
   &:not(.errorColor) {
     background-color: $color-main !important;
   }
+  &.errorColor {
+    input {
+      border-color: var(--v-error-base) !important;
+    }
+    label {
+      color: var(--v-error-base) !important;
+    }
+  }
+
   width: 100%;
   height: max-content;
 
@@ -136,15 +185,17 @@ export default {
     width: 90%;
     height: max-content;
     margin: auto;
+    z-index: 1;
 
     .input {
       display: block;
-      border: 1px $color-sec solid;
+      border: 1px solid;
+      border-color: $color-sec;
       border-radius: 15px;
       width: 100%;
-      margin-top: 1em;
-      margin-bottom: 1em;
+      margin: 18px 0px;
       padding: 10px;
+      background: inherit;
       &:focus {
         outline: none;
       }
@@ -180,6 +231,23 @@ export default {
       width: 20px;
       height: 20px;
     }
+    #errMsg {
+      z-index: -1;
+      width: 100%;
+      font-size: 12px;
+      text-align: left;
+      padding: 0 12px;
+      position: absolute;
+      color: var(--v-error-base);
+      opacity: 0;
+      bottom: 0px;
+      transition: 300ms all;
+      &.visible {
+        opacity: 1;
+        bottom: -18px;
+      }
+    }
   }
 }
 </style>
+

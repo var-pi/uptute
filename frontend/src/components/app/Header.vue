@@ -19,22 +19,30 @@
 
       <div ref="rightSide" id="rightSide">
         <div id="buttons" ref="buttons">
-          <Begin
+          <!-- <Begin
+            v-if="roles.length == 0"
             color="#000"
             textColor="white"
             borderRadius="0 0 15px 15px"
             border="none"
-            v-if="getStatus"
+          /> -->
+          <Account
+            v-if="roles.length == 0"
+            color="#000"
+            textColor="white"
+            :ifWithText="!mv"
+            borderRadius="0 0 15px 15px"
           />
           <LessonMenu
-            v-if="!getStatus"
+            v-if="roles.length > 0"
             :ifWithText="!mv"
             borderRadius="0 0 15px 15px"
           />
         </div>
         <LocalesMenu />
-        <Notifications />
-        <AccountMenu />
+        <Notifications v-if="false" />
+        <!-- v-if="roles.length > 0" -->
+        <AccountMenu v-if="roles.length > 0" />
       </div>
       <!-- </div> -->
     </div>
@@ -56,10 +64,10 @@
 <script>
 import { mapGetters, mapActions } from "vuex";
 import LessonMenu from "@/components/header/LessonMenu.vue";
-import Begin from "@/components/header/Begin.vue";
+// import Begin from "@/components/header/Begin.vue";
+import Account from "@/components/header/Account.vue";
 import LocalesMenu from "@/components/header/LocalesMenu.vue";
 import AccountMenu from "@/components/header/AccountMenu.vue";
-
 import Notifications from "@/components/notifications/Notifications.vue";
 
 export default {
@@ -72,14 +80,15 @@ export default {
   },
   components: {
     LessonMenu,
-    Begin,
+    // Begin,
+    Account,
     LocalesMenu,
     AccountMenu,
 
     Notifications,
   },
   computed: {
-    ...mapGetters(["getStatus", "getNavBar"]),
+    ...mapGetters(["getNavBar"]),
     header() {
       return this.$refs.header;
     },
@@ -92,7 +101,11 @@ export default {
     navIcon() {
       return this.$refs.navIcon;
     },
+    roles: function () {
+      return this.$store.getters["auth/roles"];
+    },
   },
+
   methods: {
     ...mapActions(["setMobileView", "setNavBar"]),
     goTo(pageName) {
@@ -141,7 +154,6 @@ export default {
         wrapper.classList.toggle("hide", hidden);
       };
     },
-
     subHeader() {
       const subHeader = this.$refs.subHeader;
 
@@ -190,7 +202,7 @@ $gap: 0.6rem;
   }
 }
 #header {
-  $gap: 1rem !important;
+  // $gap: 1rem !important;
   @include box-shadow();
 
   @include flexbox();
@@ -231,7 +243,7 @@ $gap: 0.6rem;
   #buttons {
     height: 100%;
     @include flexbox();
-    padding: 0 2rem 0 2rem;
+    // padding: 0 2rem;
   }
 
   #nav a {
@@ -264,10 +276,16 @@ $gap: 0.6rem;
       margin: 0 ($circleSize - $imgSize) / 2 !important;
     }
   }
-  #buttons > *,
+
   #rightSide {
     & > * {
       padding: 0 calc(#{$gap} / 2);
+    }
+    min-width: max-content;
+  }
+  #buttons > * {
+    & {
+      padding: 0 calc(#{$gap} * 1.5);
     }
     min-width: max-content;
   }

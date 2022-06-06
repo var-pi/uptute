@@ -5,7 +5,16 @@
       <v-btn @click="refresh()" small text rounded id="refreshBtn">
         {{ $l("find.filters.refresh") }}
       </v-btn>
-      <FilterPanel ref="panel" @next="(action) => $refs.panel2[action]()">
+      <FilterPanel
+        ref="panel"
+        @next="
+          (action, callback) =>
+            action == 'isValid'
+              ? ifPanel2IsValid(action, callback)
+              : refreshPanel2(action)
+        "
+      >
+        <!-- $refs.panel2[action]() -->
         <ExpandableListSelector
           v-model="info.subject"
           :label="$l('find.filters.subject.h')"
@@ -14,26 +23,26 @@
           :convertor="(item) => $l('data.subjects.' + item)"
           :searchLabel="$l('find.filters.subject.search')"
           :rules="(item) => item != null"
-          :flat="true"
+          :flat="false"
           :backgroundColor="'var(--v-card-lighten3)'"
           :borderRadius="'15px 15px 0px 0px'"
         />
 
         <TextField
-          v-model="info.topic.title"
+          v-model="info.topic"
           :label="$l('find.filters.topic')"
           :rules="(val) => val != '' && val != null"
           :area="false"
-          :flat="true"
+          :flat="false"
           :backgroundColor="'var(--v-card-lighten3)'"
           :borderRadius="'0px'"
         />
         <TextField
-          v-model="info.topic.text"
+          v-model="info.details"
           :label="$l('find.filters.details')"
           :rules="(val) => val != '' && val != null"
           :area="true"
-          :flat="true"
+          :flat="false"
           :backgroundColor="'var(--v-card-lighten3)'"
           :borderRadius="'0px 0px 15px 15px'"
         />
@@ -51,31 +60,32 @@
           :list="['EN', 'EST', 'RU']"
           :convertor="(item) => $l('data.languages.' + item)"
           :rules="(item) => item.length > 0"
-          :flat="true"
+          :flat="false"
           :backgroundColor="'var(--v-card-lighten3)'"
           :borderRadius="'15px 15px 0px 0px'"
         />
+
         <ExpandableSlider
           v-model="info.age"
           :label="$l('find.filters.tutor_age.h')"
           :text="info.age.join(' - ')"
           :min="15"
           :max="100"
-          :flat="true"
+          :rules="(item) => item.length > 0"
+          :flat="false"
           :backgroundColor="'var(--v-card-lighten3)'"
           :borderRadius="'0px'"
         />
         <ExpandableSlider
           v-model="info.price"
           :label="$l('find.filters.price.h')"
-          :text="
-            `${info.price[0]} - ${info.price[1]} UC/${$l(
-              'find.filters.price.p'
-            )}`
-          "
+          :text="`${info.price[0]} - ${info.price[1]} UC/${$l(
+            'find.filters.price.p'
+          )}`"
           :min="0"
           :max="150"
-          :flat="true"
+          :rules="(item) => item.length > 0"
+          :flat="false"
           :backgroundColor="'var(--v-card-lighten3)'"
           :borderRadius="'0px 0px 15px 15px'"
         />
@@ -89,16 +99,7 @@
     <v-snackbar max-width="800" color="accent" timeout="-1" v-model="showAlert">
       {{ $l("find.sure") }}
       <div id="snackButtons">
-        <v-btn
-          @click="
-            $store.dispatch('studentLessonAPI/request', {
-              info,
-              vm: getThis(),
-            });
-            $router.push({ name: 'ChooseATutor' });
-          "
-          text
-        >
+        <v-btn @click="sendLessonRequest()" text>
           {{ $l("find.begin") }}
         </v-btn>
         <v-btn @click="showAlert = false" text>
@@ -122,7 +123,7 @@ import PageViewer from "@/components/global/PageViewer.vue";
 
 export default {
   permisions: {
-    roles: "USER",
+    roles: ["ROLE_STUDENT"],
     redirect: "LogIn",
   },
   components: {
@@ -141,10 +142,8 @@ export default {
         name: "Someone", // Pull from account !!!!
         grade: 12, //Pull from account !!!!
         subject: null, // null
-        topic: {
-          title: "",
-          text: "",
-        },
+        topic: "",
+        details: "",
 
         // ----------------- this are going to be checked but not rendered
         languages: [], // ["EN"]
@@ -181,11 +180,34 @@ export default {
     },
     async request() {
       if (this.checkInProgress) return;
+
       if (await this.$refs.panel.isValid()) this.showAlert = true;
     },
     getThis() {
       return this;
     },
+    ifPanel2IsValid(action, callback) {
+      callback(this.$refs.panel2[action]());
+    },
+    refreshPanel2(action) {
+      this.$refs.panel2[action]();
+    },
+    async sendLessonRequest() {
+      const bool = await this.$store.dispatch("lesson/student/request", {
+        info: this.info,
+        vm: this.getThis(),
+      });
+      if (bool) this.$router.push({ name: "ChooseATutor" });
+    },
+    keyPressed(e) {
+      if (e.key === "Enter") this.request();
+    },
+  },
+  mounted() {
+    addEventListener("keypress", this.keyPressed);
+  },
+  beforeDestroy() {
+    removeEventListener("keypress", this.keyPressed);
   },
 };
 </script>

@@ -1,24 +1,25 @@
 <template>
   <v-app>
-    <Navigation />
-    <Header />
+    <Navigation v-if="ifNavigation" />
+    <Header v-if="ifHeader" />
     <v-main>
       <transition name="fade" mode="out-in">
         <router-view />
       </transition>
     </v-main>
     <!-- <MessengerChat /> -->
-    <Footer />
+    <Footer v-if="ifFooter" />
   </v-app>
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
+import { mapActions } from "vuex";
 import Header from "@/components/app/Header.vue";
 import Footer from "@/components/app/Footer.vue";
 import Navigation from "@/components/app/Navigation.vue";
 // import MessengerChat from "@/components/MessengerChat.vue";
 import { apiRequest } from "@/services/api.service.js";
+import rules from "@/router/rules.js";
 
 export default {
   data: () => ({
@@ -30,7 +31,6 @@ export default {
     Navigation,
     // MessengerChat,
   },
-  computed: mapGetters(["getStatus"]),
   methods: {
     ...mapActions(["isAuth"]),
     // ---------
@@ -39,13 +39,22 @@ export default {
         method: "get",
         urlEnd: `/api/auth/facebook/signin`,
       }).catch((err) => console.log(err));
-      // console.log("---------------------");
-      // console.log(res);
       res;
     },
   },
   mounted() {
     // this.getFirstPost();
+  },
+  computed: {
+    ifNavigation() {
+      return !rules.no.navigation.includes(this.$route.name);
+    },
+    ifHeader() {
+      return !rules.no.header.includes(this.$route.name);
+    },
+    ifFooter() {
+      return !rules.no.footer.includes(this.$route.name);
+    },
   },
 };
 </script>
@@ -133,3 +142,4 @@ html {
   opacity: 0;
 }
 </style>
+

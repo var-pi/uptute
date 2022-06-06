@@ -73,9 +73,8 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
+import { mapActions } from "vuex";
 export default {
-  computed: mapGetters(["getStatus"]),
   methods: mapActions(["isAuth", "logout"]),
   data() {
     return {
@@ -109,3 +108,4 @@ export default {
   padding: 10px;
 }
 </style>
+

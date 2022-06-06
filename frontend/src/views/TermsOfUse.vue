@@ -238,6 +238,9 @@
 <script>
 import Subheader from "@/components/app/Subheader.vue";
 export default {
+  permisions: {
+    roles: "ALL",
+  },
   components: {
     Subheader,
   },
@@ -282,3 +285,4 @@ li:before {
   }
 }
 </style>
+

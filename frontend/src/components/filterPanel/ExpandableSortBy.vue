@@ -1,28 +1,30 @@
 <template>
-  <ExpansionBaseComponent
-    ref="base"
-    v-model="input"
-    :label="label"
-    :text="text"
-    :flat="flat"
-    :borderRadius="borderRadius"
-  >
-    <div
-      class="filter"
-      v-for="item in filters"
-      :key="item.name"
-      :checked="input.name === item.name"
-      :dir="input.dir"
-      @click="change(item)"
+  <v-expansion-panels flat>
+    <ExpansionBaseComponent
+      ref="base"
+      v-model="input"
+      :label="label"
+      :text="text"
+      :flat="flat"
+      :borderRadius="borderRadius"
     >
-      <div class="wrapper">
-        <div class="rotator">
-          <v-icon class="icon">mdi-water</v-icon>
+      <div
+        class="filter"
+        v-for="item in filters"
+        :key="item.name"
+        :checked="input.name === item.name"
+        :dir="input.dir"
+        @click="change(item)"
+      >
+        <div class="wrapper">
+          <div class="rotator">
+            <v-icon class="icon">mdi-water</v-icon>
+          </div>
         </div>
+        <p>{{ convertor(item) }}</p>
       </div>
-      <p>{{ convertor(item) }}</p>
-    </div>
-  </ExpansionBaseComponent>
+    </ExpansionBaseComponent>
+  </v-expansion-panels>
 </template>
 
 <script>
@@ -76,7 +78,6 @@ $transition-duration: 0.4s;
 $margin-top: 0.4rem;
 
 $side-margin: 0.8rem;
-$icon-offset: -8%;
 
 .filter {
   overflow: hidden;
@@ -97,7 +98,7 @@ $icon-offset: -8%;
   }
   .icon {
     color: var(--v-secondary-darken2);
-    transform: translateY($icon-offset);
+    padding: 0 !important;
   }
   p {
     margin: 0 0 0 #{$icon-wrapper-size + $side-margin};
@@ -117,6 +118,7 @@ $icon-offset: -8%;
     }
     .icon {
       transform: scale(#{1 / $scale});
+      // transform: scale(0.9);
     }
   }
   &[dir="down"] .rotator {
@@ -124,3 +126,4 @@ $icon-offset: -8%;
   }
 }
 </style>
+

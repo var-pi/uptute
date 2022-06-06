@@ -7,16 +7,8 @@
 
 <br>
 
-## [Authenticate](./Authenticate.md)
+## [Authentication](./Authentication.md)
 
-## [User](./User.md)
-
-## [Student](./Student.md)
-
-## [Tutor](./Tutor.md)
-
-## [Student Lesson](./StudentLesson.md)
-
-## [Tutor Lesson](./TutorLesson.md)
+## [Account](./Account.md)
 
 ## [Lesson](./Lesson.md)

@@ -14,24 +14,24 @@
     </template>
 
     <template v-slot:content>
-      <v-list-item>
+      <!-- <v-list-item>
         <v-btn text @click="goTo('Profile')">
           <v-icon>mdi-account-circle</v-icon>
           {{ $l("acc_pages.profile") }}
         </v-btn>
-      </v-list-item>
+      </v-list-item> -->
       <!-- <v-list-item>
         <v-btn text @click="goTo('Calendar')">
           <v-icon>mdi-calendar-clock</v-icon>
           {{ $l("acc_pages.calendar") }}
         </v-btn>
       </v-list-item> -->
-      <v-list-item>
+      <!-- <v-list-item>
         <v-btn text @click="goTo('Logs')">
           <v-icon>mdi-calendar-check</v-icon>
           {{ $l("acc_pages.logs") }}
         </v-btn>
-      </v-list-item>
+      </v-list-item> -->
       <v-list-item>
         <v-btn text @click="goTo('Settings')">
           <v-icon>mdi-account-cog</v-icon>
@@ -39,7 +39,7 @@
         </v-btn>
       </v-list-item>
       <v-list-item>
-        <v-btn text id="logOut">
+        <v-btn text @click="logout()" id="logOut">
           <v-icon>mdi-logout</v-icon>
           {{ $l("acc_pages.log_out") }}
         </v-btn>
@@ -58,6 +58,9 @@ export default {
   methods: {
     goTo(pageName) {
       if (this.$route.name !== pageName) this.$router.push({ name: pageName });
+    },
+    logout() {
+      this.$store.dispatch("auth/logout");
     },
   },
 };
@@ -83,3 +86,4 @@ export default {
   width: fit-content !important;
 }
 </style>
+

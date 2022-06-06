@@ -69,7 +69,7 @@
             {{ $l("app.pages.register") }}
           </v-list-item> -->
           <!-- <v-list-item link active-class="active" :to="{ name: 'FindATutor' }">
-            {{ $l("app.pages.find_tutor") }}
+            {{ $l("app.pages.find_a_tutor") }}
           </v-list-item> -->
         </v-list-item-group>
       </v-list>
@@ -98,7 +98,7 @@ export default {
       this.value = val;
     },
   },
-  computed: mapGetters(["getStatus", "getNavBar", "isMobileView"]),
+  computed: mapGetters(["getNavBar", "isMobileView"]),
   methods: mapActions(["setNavBar"]),
 };
 </script>
@@ -186,3 +186,4 @@ export default {
   }
 }
 </style>
+

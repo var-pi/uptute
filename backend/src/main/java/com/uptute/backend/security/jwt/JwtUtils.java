@@ -1,11 +1,6 @@
 package com.uptute.backend.security.jwt;
 
-import java.sql.Date;
-import java.util.stream.Collectors;
-
-import com.uptute.backend.entities.Account;
-import com.uptute.backend.entities.Role;
-import com.uptute.backend.enums.ERole;
+import java.util.Date;
 
 import org.springframework.stereotype.Component;
 
@@ -26,13 +21,14 @@ public class JwtUtils {
     @Value("${uptute.app.jwtExpirationMs}")
     private int jwtExpirationMs;
 
-    public String generateToken(Account accaunt) {
-        Long now = System.currentTimeMillis();
-        return Jwts.builder().setSubject(accaunt.getUUID())
-                .claim("authorities",
-                        accaunt.getRoles().stream().map(Role::getName).map(ERole::toString)
-                                .collect(Collectors.toList()))
-                .setIssuedAt(new Date(now + jwtExpirationMs)).signWith(SignatureAlgorithm.HS512, jwtSecret.getBytes())
+    public String generateJwtToken(String uuid) {
+        var now = new Date();
+        var exprirationTime = new Date(now.getTime() + jwtExpirationMs);
+        return Jwts.builder()
+                .setSubject(uuid)
+                .setIssuedAt(now)
+                .setExpiration(exprirationTime)
+                .signWith(SignatureAlgorithm.HS512, jwtSecret)
                 .compact();
     }
 
@@ -51,23 +47,10 @@ public class JwtUtils {
         } catch (IllegalArgumentException e) {
             logger.error("JWT claims string is empty: {}", e.getMessage());
         }
-
         return false;
     }
-    // public void validateToken(String token) {
-    // try {
-    // Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token);
-    // } catch (SignatureException e) {
-    // throw new JwtException(token, "Invalid JWT signature: " + e.getMessage());
-    // } catch (MalformedJwtException e) {
-    // throw new JwtException(token, "Invalid JWT token: " + e.getMessage());
-    // } catch (ExpiredJwtException e) {
-    // throw new JwtException(token, "JWT token is expired: " + e.getMessage());
-    // } catch (UnsupportedJwtException e) {
-    // throw new JwtException(token, "JWT token is unsupported: " + e.getMessage());
-    // } catch (IllegalArgumentException e) {
-    // throw new JwtException(token, "JWT claims string is empty: " +
-    // e.getMessage());
-    // }
-    // }
+
+    public String getUsernameFromJwtToken(String token) {
+        return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().getSubject();
+    }
 }

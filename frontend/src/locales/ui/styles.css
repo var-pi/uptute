@@ -1,0 +1,124 @@
+html,
+body,
+#main {
+  width: 100vw;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  --shadow_params: 2px 1px 3px 2px #dfdfdf;
+  --shadow_params_pressed: 2px 1px 1px 0px #dfdfdf;
+  --transition_time: 300ms;
+  --font_size: 14px;
+  --text_color: #aaa;
+}
+#main {
+  display: flex;
+  flex-wrap: wrap;
+  background-color: #efefef;
+  align-items: center;
+  justify-content: center;
+}
+#header {
+  width: 100vw;
+  height: fit-content;
+  position: fixed;
+  top: 0;
+  display: flex;
+  padding: 16px 0;
+}
+#header button#download {
+  margin: 0 32px;
+  margin-left: auto;
+  padding: 8px;
+  border-radius: 15px;
+  outline: none;
+  border: none;
+  box-shadow: var(--shadow_params);
+  color: var(--text_color);
+
+  transition: all 300ms;
+}
+#header button#download:hover {
+  box-shadow: var(--shadow_params_pressed);
+  cursor: pointer;
+}
+#wrapper {
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+  max-width: 90vw;
+  height: fit-content;
+  padding: 12px 0;
+  border-radius: 15px;
+  box-shadow: var(--shadow_params);
+  margin: 32px 0;
+}
+td:first-child {
+  border-right: 1px #ddd solid;
+}
+.cell {
+  padding: 8px;
+  margin: 6px;
+  color: var(--text_color);
+  font-family: Comfortaa;
+  font-size: var(--font_size);
+}
+p.cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 175px;
+}
+input[type="text"].cell {
+  border: none;
+  outline: none;
+  border-radius: 15px;
+  background-color: #ffffff00;
+  text-align: center;
+  transition: all var(--transition_time);
+}
+input[type="text"].cell:hover {
+  box-shadow: var(--shadow_params);
+}
+table {
+  border-spacing: 0px;
+  transition: all var(--transition_time);
+}
+tr:hover p.cell {
+  color: #ffa500;
+}
+.dropdown {
+  display: flex;
+  flex-direction: column;
+  border-radius: 15px;
+  margin: 6px;
+  padding: 6px 0;
+  transition: all var(--transition_time);
+}
+.dropdown:hover {
+  box-shadow: var(--shadow_params);
+}
+.dropdown .button {
+  outline: none;
+  border: none;
+  height: 32px;
+  color: #888;
+  font-family: Comfortaa;
+  border-radius: 15px;
+  font-size: var(--font_size);
+  transition: color var(--transition_time);
+}
+.dropdown .button:hover {
+  cursor: pointer;
+}
+.dropdown .content {
+  border-radius: 15px;
+  transform-origin: top;
+  transform-style: flat;
+}
+.dropdown:hover > .button {
+  color: #ffa500;
+}
+.dropdown .content.ifWithTransition {
+  transition: all var(--transition_time);
+}

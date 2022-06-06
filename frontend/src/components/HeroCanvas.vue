@@ -169,9 +169,9 @@ export default {
 
       this.fillBackground();
     },
-    mousemove(event) {
-      this.mouseX = event.x;
-      this.mouseY = event.y;
+    mousemove(e) {
+      this.mouseX = e.x;
+      this.mouseY = e.y;
       if (!this.fadeInProcess) this.updateMouseForChars();
     },
     updateMouseForChars() {

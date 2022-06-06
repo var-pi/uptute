@@ -67,3 +67,9 @@ export function rndBtw(start, end) {
 //     card.style =
 //       "transition: all 1s; transform: perspective(1000px) translateZ(0px); ";
 // });
+
+export function ruleBase({ self, title, condition, pathEnd, lParams }) {
+  if (!condition)
+    self[title].errMsg = self.$l(`auth.rules.${pathEnd}`, lParams || {});
+  return condition;
+}

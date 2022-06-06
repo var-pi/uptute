@@ -1,29 +1,28 @@
 {
   "id": "en",
-  "global": {
-    "wrong": "Something went wrong"
-  },
+  "global": { "wrong": "Something went wrong" },
   "auth": {
-    "header": {
-      "log_in": "Log in",
-      "register": "Register"
-    },
     "google": "Use Google",
     "facebook": "Use Facebook",
     "allow_cookies": "To use Google authorisation please allow <b>Third-Party Cookies</b> ",
-    "btn": {
-      "log_in": "Log in",
-      "register": "Register"
-    },
-    "email": "Your email...",
-    "password": "Your password...",
+    "email": "Email",
+    "name": "Name",
+    "surname": "Surname",
+    "password": "Password",
     "forgot": "Forgot your password?",
     "account_yet": "Don't have an account yet?",
-    "create": "Create a passwrod",
-    "repeat": "Repeat the password...",
+    "account_already": "Have an account already?",
+    "create": "Passwrod",
+    "repeat": "Repeat the password",
     "must_agree": "We need your agreement to continue",
     "privacy": "Agree to ",
     "receive": "I'd like to receive UpTute's news and promotions.",
+    "header": {
+      "account": "Account",
+      "sign_in": "Sign in",
+      "sign_up": "Sign up"
+    },
+    "btn": { "log_in": "Log in", "register": "Register" },
     "like_to": {
       "parameter": "I'd like to",
       "tutor": "be a tutor",
@@ -37,28 +36,43 @@
       },
       "password": {
         "require": "Password is required",
-        "not_matching": "Password are not matching",
-        "lenght": {
+        "not_matching": "Passwords are not matching",
+        "length": {
           "max": "Password must be less than ${n} characters",
           "min": "Min ${n} characters"
         }
       },
       "name": {
         "require": "Name is required",
-        "max": "Name must be less than ${n} characters",
-        "lenght": {
+        "length": {
           "max": "Name must be less than ${n} characters",
           "min": "Min ${n} characters"
         }
+      },
+      "surname": {
+        "require": "Surname is required",
+        "length": {
+          "max": "Surname must be less than ${n} characters",
+          "min": "Min ${n} characters"
+        }
+      },
+      "link": {
+        "require": "Link is required",
+        "valid": "It must be a valid link"
       }
+    },
+    "error": {
+      "email_exists": "There already exists an account with this email",
+      "email_or_password": "Wrong email or password",
+      "expired": "Current session has expired"
     }
   },
   "app": {
     "pages": {
       "home": "Home",
       "begin": "Begin your journey",
-      "account": "Account",
-      "find_tutor": "Find your tutor",
+      "find_a_tutor": "Find your tutor",
+      "choose_a_student": "Teach",
       "blog": "Our blog",
       "why_us": "Why us?",
       "log_in": "Log In",
@@ -67,31 +81,22 @@
       "privacy_policy": "Privacy Policy",
       "and": "and",
       "terms": "Terms",
-      "with_terms": "Terms"
+      "with_terms": "Terms",
+      "account": { "settings": "Settings" }
     },
     "header": {
-      "lesson": {
-        "title": "Lesson",
-        "learn": "Learn",
-        "teach": "Teach"
-      },
+      "lesson": { "title": "Lesson", "learn": "Learn", "teach": "Teach" },
       "notifications": {
         "nothing": "Nothing here",
-        "accepted": {
-          "lesson": "A lesson with NAME",
-          "link": "here"
-        },
-        "feedback": {
-          "gave": "COMMENTER gave you a",
-          "link": "feedback"
-        }
+        "accepted": { "lesson": "A lesson with NAME", "link": "here" },
+        "feedback": { "gave": "COMMENTER gave you a", "link": "feedback" }
       }
     },
-    "footer": {
-      "pages_title": "Some pages:"
-    }
+    "footer": { "pages_title": "Some pages:" }
   },
   "home": {
+    "gallery": "Gallery",
+    "testimonials": "Testimonials",
     "landing": {
       "title": "Fun. Fast. Friendly.",
       "subtitle": "Lets learn anew.",
@@ -100,42 +105,33 @@
     },
     "mission": {
       "title": "Our missions",
-      "list": [
-        "To make studying easy, smooth and cheerful.",
-        "To share our passions and make you passionate about them also too.",
-        "To make help affordable and effective."
-      ],
-      "btn": "Get to know us better"
+      "btn": "Get to know us better",
+      "list": {
+        "process": "To make studying easy, smooth and cheerful.",
+        "passion": "To share our passions and make you passionate about them also too.",
+        "affordable": "To make help affordable and effective."
+      }
     },
     "how_it_works": {
       "title": "How it works",
-      "list": [
-        {
+      "btn": "Why us?",
+      "list": {
+        "filters": {
           "h": "Filters",
           "p": "Fill a few fields with info about what you are looking for. (Time, price, etc.)"
         },
-        {
+        "choose": {
           "h": "Choose",
           "p": "Wait a bit for tutors to offer their help and choose the one that is just right."
         },
-        {
-          "h": "The lesson",
-          "p": "Enjoy your lesson!"
-        },
-        {
+        "lesson": { "h": "The lesson", "p": "Enjoy your lesson!" },
+        "rate": {
           "h": "Rate",
           "p": "Share your thoughts about the lesson and give tutor a mark."
         }
-      ],
-      "btn": "Why us?"
+      }
     },
-    "gallery": "Gallery",
-    "testimonials": "Testimonials",
-    "faq": {
-      "title": "FAQ",
-      "questions": "Questions",
-      "answers": "Answers"
-    },
+    "faq": { "title": "FAQ", "questions": "Questions", "answers": "Answers" },
     "know_you": {
       "title": "Now when you know us",
       "subtitle": "Let us to get to know you",
@@ -146,94 +142,73 @@
     "header": "Why us?",
     "student": {
       "title": "For a student",
-      "list": [
-        {
+      "list": {
+        "price": {
           "h": "An excellent price",
           "p": "Your peers won't charge you far as much as a guy with doctors degree."
         },
-        {
+        "now": {
           "h": "Now, not tomorrow",
           "p": "With us you can get help whenever you need it. Need it today? So be it!"
         },
-        {
+        "understand": {
           "h": "We understand",
           "p": "We know your hurdles. We have just the same ones after all. And so do our young tutors."
         }
-      ]
+      }
     },
     "tutor": {
       "title": "For a tutor",
-      "list": [
-        {
+      "list": {
+        "not_just": {
           "h": "Not just a job",
           "p": "Let's develop communication and empathy skills and become even more self-confident!"
         },
-        {
+        "salary": {
           "h": "Substantial salary",
           "p": "With us you do the thing you do the best. And so the wage is corresponding. Get the most out of your time!"
         },
-        {
+        "price": {
           "h": "The perfect price",
           "p": "Algorithm takes care of your price per hour so that you'll have the most lessons with a highest price."
         },
-        {
+        "flexible": {
           "h": "Flexible work hours",
           "p": "You choose when to work and how much to work."
         }
-      ]
+      }
     }
   },
   "find": {
     "header": "Find your tutor",
-    "search": "Type the tutor's name...",
+    "search": "The tutor's name",
+    "request": "Send a request",
+    "sure": "Sure you want to begin the search?",
+    "begin": "Begin",
+    "cancel": "Cancel",
     "filters": {
-      "subject": {
-        "h": "Subject",
-        "search": "Search"
-      },
       "topic": "Topic",
       "details": "Details",
-      "language": {
-        "h": "Language"
-      },
-      "location": {
-        "h": "Location",
-        "p": "Your location..."
-      },
-      "audience": {
-        "h": "Grades you tech"
-      },
-      "price": {
-        "h": "Price",
-        "p": "h"
-      },
-      "day": {
-        "h": "Day"
-      },
-      "time": {
-        "h": "Time"
-      },
-      "tutor_age": {
-        "h": "Tutor's age",
-        "p": " y.o."
-      },
+      "native": "native speaker",
+      "refresh": "Refresh filters",
+      "subject": { "h": "Subject", "search": "Search" },
+      "language": { "h": "Language" },
+      "location": { "h": "Location", "p": "Your location" },
+      "audience": { "h": "Grades you tech" },
+      "price": { "h": "Price", "p": "h" },
+      "day": { "h": "Day" },
+      "time": { "h": "Time" },
+      "tutor_age": { "h": "Tutor's age", "p": " y.o." },
       "filters": {
         "h": "Sort by",
         "price": "Price",
         "rating": "Rating",
         "hours_taught": "Hours taught",
-
         "time": "Time",
         "subject": "Subject",
         "grade": "Grade"
-      },
-      "native": "native speaker",
-      "refresh": "Refresh filters"
-    },
-    "request": "Send a request",
-    "sure": "Sure you want to begin the search?",
-    "begin": "Begin",
-    "cancel": "Cancel"
+      }
+    }
   },
   "choose_a": {
     "tutor": {
@@ -246,8 +221,7 @@
       "hours": "hours taught",
       "comments": "number of comments",
       "fail": {
-        "init": "Database is currently not attached. The process of getting a lesson will be shown during the UPT presentation.",
-        "_comment": "UPT. Change init back to: Failed to create a lesson request",
+        "init": "Failed to create a lesson request",
         "offers": "Failed to get offers",
         "reject": "Failed to reject the offer",
         "accept": "Failed to accept an offer",
@@ -269,8 +243,7 @@
         "conference": "Failed to start a conference",
         "cancel": "Failed to cancel the offer",
         "listen_accept": "Failed to listen for accepted",
-        "lessons": "Database is currently not attached. The process of offering a lesson will be shown during the UPT presentation.",
-        "_comment": "UPT. Change lessons back to: Failed to get lessons from a server",
+        "lessons": "Failed to get lessons from a server",
         "send": "Failed to send a lessons offer"
       }
     }
@@ -278,7 +251,7 @@
   "tutor": {
     "hour": "h",
     "clarification": "Next 7 days, your time zone:",
-    "btn": "Book a lesson",
+    "btn": "Accept the offer",
     "subjects": "Subjects",
     "languages": "Languages",
     "age": "My age",
@@ -289,23 +262,25 @@
     "comments": "Comments"
   },
   "booking": {
-    "subheader": "Book the lesson",
+    "subheader": "Accept the offer",
     "date": "Date of the lesson",
     "time": "Time of the lesson",
-    "card_name": "Card holder name...",
-    "card_int": ["Card number...", "MM/YY", "CVC"],
     "cost": "Cost",
     "tooltip": "Cost of the lesson is calculated at the end of the session based on its length",
-    "confirm": "Confirm the booking",
+    "confirm": "Confirm the lesson",
+    "card": {
+      "name": "Card holder name",
+      "number": "",
+      "exp": "MM/YY",
+      "cvc": "CVC"
+    },
     "dialog": {
-      "title": "Your lesson's link",
-      "here": "here",
-      "text": "Your lesson will be hosted"
+      "title": "Lesson initiated",
+      "text": "Conference will open soon"
     }
   },
   "set_up": {
     "subheader": "Setting up your account",
-
     "clarification": "Fill in now or continue later",
     "name": "First name",
     "surname": "Surname",
@@ -314,24 +289,18 @@
     "year_holder": "DD/MM/YYYY",
     "subjects": "Subjects you tech",
     "zoom": "Your Zoom meeting link",
-    "dialog": {
-      "title": "Not sure what it is?",
-      "text": "Find out",
-      "link": "here"
-    },
     "motto": "Your motto",
     "about": "A bit about yourself",
     "as_student": "As a student",
     "as_tutor": "As a tutor",
-    "button": "Done"
-  },
-
-  "lesson": {
-    "feedback": {
-      "comment": "Comment"
+    "button": "Done",
+    "dialog": {
+      "title": "Not sure what it is?",
+      "text": "Find out",
+      "link": "here"
     }
   },
-
+  "lesson": { "feedback": { "comment": "Comment" } },
   "acc_pages": {
     "profile": "Profile",
     "calendar": "Calendar",
@@ -345,9 +314,9 @@
   },
   "settings": {
     "password": "Change your password",
-    "old": "Old password...",
-    "new": "New password...",
-    "repeat": "Repeat the new password...",
+    "old": "Old password",
+    "new": "New password",
+    "repeat": "Repeat the new password",
     "delete": "Delete the acount",
     "save": "Save changes"
   },
@@ -366,107 +335,47 @@
   "calendar": {
     "cancel": "Cancel the lesson",
     "sure": "Are you sure you want to cancel the lesson?",
-    "why": "Comment on why...",
+    "why": "Comment on why",
     "yes": "Yes, cancel it",
     "no": "Nope, go back"
   },
   "feedback": {
     "title": "How did you like the lesson?",
-    "comment": "Your comment...",
+    "comment": "Your comment",
     "button1": "Skip",
     "button2": "Save"
   },
   "about": {
     "subheader": "About us",
-    "The very beggining": "We saw the need, we saw the will. We noticed that our peers are increasingly seeking for some pocket money.\n\nAlso we knew that peers understand each over much better than whoever else and so it is in teaching and studying also – a classmate can explain you the topic of the whole lesson in a few minutes.",
+    "The very beggining": "We saw the need, we saw the will. We noticed that our peers are increasingly seeking for some pocket money.Also we knew that peers understand each over much better than whoever else and so it is in teaching and studying also – a classmate can explain you the topic of the whole lesson in a few minutes.",
     "The solution": "And so, here we are – offering you an opportunity to share what you know the best – what you've just learned and what is still fresh in mind. Or to receive the help you need in a fastest and easiest to comprehend way possible..",
-    "Our goals": "We strive towards a world in which help is affordable, easy to comprehend, enjoyable and fast to access.\n\nWe know that only thing that is worth doing and is done the best is the thing you enjoy the most. Thus our aspiration is to let you to do what you love the most.",
-    "What's next?": "We'll be continually improving the website, raising out tutors qualification, growing the number of tutors and subjects available and expand the locations covered by our tutors.\n\nAnd all that with one purpose – fulfilment of our vision of help – fun, fast and friendly."
+    "Our goals": "We strive towards a world in which help is affordable, easy to comprehend, enjoyable and fast to access.We know that only thing that is worth doing and is done the best is the thing you enjoy the most. Thus our aspiration is to let you to do what you love the most.",
+    "What's next?": "We'll be continually improving the website, raising out tutors qualification, growing the number of tutors and subjects available and expand the locations covered by our tutors.And all that with one purpose – fulfilment of our vision of help – fun, fast and friendly."
   },
   "data": {
-    "actions": {
-      "cancel": "Cancel",
-      "ok": "Ok"
-    },
+    "actions": { "cancel": "Cancel", "ok": "Ok" },
     "days": {
-      "mon": {
-        "short": "Mon",
-        "full": "Monday"
-      },
-      "tue": {
-        "short": "Mon",
-        "full": "Tuesday"
-      },
-      "wed": {
-        "short": "Wed",
-        "full": "Wednesday"
-      },
-      "thu": {
-        "short": "Thu",
-        "full": "Thursday"
-      },
-      "fri": {
-        "short": "Fri",
-        "full": "Friday"
-      },
-      "sat": {
-        "short": "Sat",
-        "full": "Saturday"
-      },
-      "sun": {
-        "short": "Sat",
-        "full": "Sunday"
-      }
+      "mon": { "short": "Mon", "full": "Monday" },
+      "tue": { "short": "Tue", "full": "Tuesday" },
+      "wed": { "short": "Wed", "full": "Wednesday" },
+      "thu": { "short": "Thu", "full": "Thursday" },
+      "fri": { "short": "Fri", "full": "Friday" },
+      "sat": { "short": "Sat", "full": "Saturday" },
+      "sun": { "short": "Sun", "full": "Sunday" }
     },
     "months": {
-      "jan": {
-        "short": "Jan",
-        "full": "January"
-      },
-      "feb": {
-        "short": "Feb",
-        "full": "February"
-      },
-      "mar": {
-        "short": "Mar",
-        "full": "March"
-      },
-      "apr": {
-        "short": "Apr",
-        "full": "April"
-      },
-      "may": {
-        "short": "May",
-        "full": "May"
-      },
-      "jun": {
-        "short": "Jun",
-        "full": "June"
-      },
-      "jul": {
-        "short": "Jul",
-        "full": "July"
-      },
-      "aug": {
-        "short": "Aug",
-        "full": "August"
-      },
-      "sept": {
-        "short": "Sept",
-        "full": "September"
-      },
-      "oct": {
-        "short": "Oct",
-        "full": "October"
-      },
-      "nov": {
-        "short": "Nov",
-        "full": "November"
-      },
-      "dec": {
-        "short": "Dec",
-        "full": "December"
-      }
+      "jan": { "short": "Jan", "full": "January" },
+      "feb": { "short": "Feb", "full": "February" },
+      "mar": { "short": "Mar", "full": "March" },
+      "apr": { "short": "Apr", "full": "April" },
+      "may": { "short": "May", "full": "May" },
+      "jun": { "short": "Jun", "full": "June" },
+      "jul": { "short": "Jul", "full": "July" },
+      "aug": { "short": "Aug", "full": "August" },
+      "sept": { "short": "Sept", "full": "September" },
+      "oct": { "short": "Oct", "full": "October" },
+      "nov": { "short": "Nov", "full": "November" },
+      "dec": { "short": "Dec", "full": "December" }
     },
     "subjects": {
       "MATH": "Maths",
@@ -477,11 +386,7 @@
       "CHEM": "Chemestry",
       "CIS": "Computer Science"
     },
-    "languages": {
-      "EN": "English",
-      "EST": "Estonian",
-      "RU": "Russian"
-    }
+    "languages": { "EN": "English", "EST": "Estonian", "RU": "Russian" }
   },
   "about_tutor": {
     "me": "About me",

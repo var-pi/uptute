@@ -1,57 +1,62 @@
 import axios from "axios";
+import store from "@/store/index";
+import { vm } from "@/main";
 
-// localStorage.setItem("refreshToken", "asda31fg24g");
-// sessionStorage.setItem("jwt", "23f224gga");
-
-export async function apiRequest({ method, urlEnd, data = {} }) {
+export async function apiRequest({
+  method,
+  urlEnd,
+  data = {},
+  withJwt = true,
+}) {
+  const jwt = withJwt ? await getJwt() : null;
+  if (withJwt && checkJwtExpiration(jwt)) return new Error("JWT expired");
   const res = await axios({
     method,
     url: "/api" + urlEnd,
     data: data,
-    headers: getHeaders(),
-  }).catch((err) => console.error(err.response.data));
+    headers: getHeaders(jwt, withJwt),
+  }).catch((err) => handleErr(err));
   // saveToStorage(res);
   return res;
 }
 
-function getHeaders() {
-  let header = {
-    // refreshToken: localStorage.getItem("refreshToken"),
-    // jwt: getJwt(localStorage.getItem("refreshToken")),
-
-    "Content-Type": "application/json",
-  };
-  return header;
+function checkJwtExpiration(jwt) {
+  if (isJwtExpired(jwt) || !jwt) {
+    store.dispatch("auth/logout");
+    alert(vm.$l("auth.error.expired"));
+    return true;
+  }
+  return false;
 }
 
-// async function getJwt(refreshToken) {
-//   let jwt = sessionStorage.getItem("jwt");
-//   if ((jwt == undefined || isJwtExpired(jwt)) && refreshToken != undefined) {
-//     const res = await apiRequest({
-//       method: "post",
-//       urlEnd: "/auth/refreshToken",
-//     });
-//     jwt = res.jwt;
-//   }
-//   return jwt;
-// }
+export function isJwtExpired(jwt) {
+  if (!jwt) return true;
+  const decodedJwt = parseJwt(jwt);
+  return Date.now() > decodedJwt.exp * 1000;
 
-// function isJwtExpired(jwt) {
-//   var base64Url = jwt.split(".")[1];
-//   var base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
-//   var jsonPayload = decodeURIComponent(
-//     atob(base64)
-//       .split("")
-//       .map(function(c) {
-//         return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
-//       })
-//       .join("")
-//   );
-//   return Date.now() > JSON.parse(jsonPayload).exp;
-// }
+  function parseJwt(token) {
+    try {
+      return JSON.parse(atob(token.split(".")[1]));
+    } catch (e) {
+      return null;
+    }
+  }
+}
 
-// function saveToStorage(res) {
-//   if (res.refreshToken != undefined)
-//     localStorage.setItem("refreshToken", res.refreshToken);
-//   if (res.jwt != undefined) sessionStorage.setItem("refreshToken", res.jwt);
-// }
+function getHeaders(jwt, withJwt) {
+  let headers = {
+    "Content-Type": "application/json",
+  };
+  if (withJwt) headers.Authorization = `Bearer ${jwt}`;
+  return headers;
+}
+
+export async function getJwt() {
+  const jwt = await store.dispatch("auth/refreshJwt").then((r) => r?.data?.jwt);
+  return jwt;
+}
+
+function handleErr(err) {
+  console.error(err.response.data);
+  return err;
+}

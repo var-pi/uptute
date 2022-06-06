@@ -20,16 +20,15 @@
           ]"
           :label="$l('find.filters.filters.h')"
           :flat="false"
-          :text="
-            `${$l('find.filters.filters.' + filter.name)} ${
-              filter.dir === 'up' ? '↑' : '↓'
-            }`
-          "
+          :text="`${$l('find.filters.filters.' + filter.name)} ${
+            filter.dir === 'up' ? '↑' : '↓'
+          }`"
           :convertor="(item) => $l('find.filters.filters.' + item.name)"
           borderRadius="15px"
         />
       </FilterPanel>
       <Panels id="panels" :tutors="getTutors()" />
+      <!-- :lesson="$store.state['lesson/student'].info" -->
     </div>
     <v-snackbar max-width="800" color="error" timeout="-1" v-model="showAlert">
       {{ $l("choose_a.tutor.ended") }}
@@ -53,10 +52,11 @@ import Searching from "@/components/choosing/Searching.vue";
 import LessonInfo from "@/components/choosing/infoCards/LessonInfo.vue";
 import FilterPanel from "@/components/filterPanel/FilterPanel.vue";
 import ExpandableSortBy from "@/components/filterPanel/ExpandableSortBy.vue";
+import { isJwtExpired } from "@/services/api.service.js";
 
 export default {
   permisions: {
-    roles: "USER",
+    roles: "ROLE_STUDENT",
     allowedOrigins: "FindATutor",
     redirect: "FindATutor",
   },
@@ -115,16 +115,21 @@ export default {
       }
     },
     getTutors() {
-      return this.$store.state.studentLessonAPI.tutors;
+      return this.$store.state["lesson/student"].tutors;
     },
   },
-  beforeRouteLeave(to, from, next) {
-    if (this.$store.state.studentLessonAPI.state === "idle") next();
+  async beforeRouteLeave(to, from, next) {
+    const jwt = JSON.parse(sessionStorage.getItem("user")).jwt;
+    if (
+      this.$store.state["lesson/student"].state === "idle" ||
+      isJwtExpired(jwt)
+    )
+      next();
     this.showAlert = true;
     this.untilClick().then(async (val) => {
       this.showAlert = false;
       if (val === "close") {
-        await this.$store.dispatch("studentLessonAPI/deleteLesson");
+        await this.$store.dispatch("lesson/student/deleteLesson");
         next();
       }
     });

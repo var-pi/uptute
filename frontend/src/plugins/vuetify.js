@@ -22,9 +22,18 @@ export default new Vuetify({
         error: "#ef5350",
         thumb: "#bbb",
         thumbHover: "#b6b6b6",
-        innerThumb: "ddd",
-        innerThumbHover: "d6d6d6",
+        innerThumb: "#ddd",
+        innerThumbHover: "#d6d6d6",
+      },
+      dark: {
+        background: "#131313",
+        btnOn: "#333",
+        btnOff: "#131313",
+        light: "#bbb",
+        card: "#333",
+        accent: "#FFA500",
       },
     },
   },
 });
+

@@ -1,11 +1,15 @@
 <template>
   <div id="container">
     <Subheader :title="$l('acc_pages.settings')" />
-    <PrimarySettings />
-    <SecondarySettings />
-    <!-- v-if="getStatus === 'TUTOR'" -->
-    <!-- bind status!! -->
-    <v-btn id="save" rounded outlined color="accent">
+    <PrimarySettings :data="data" />
+    <TutorSettings :data="data" v-if="roles.includes('ROLE_TUTOR')" />
+    <v-btn
+      @click="updateUserDetails(data)"
+      id="save"
+      rounded
+      outlined
+      color="accent"
+    >
       {{ $l("settings.save") }}</v-btn
     >
   </div>
@@ -14,21 +18,48 @@
 <script>
 import Subheader from "@/components/app/Subheader.vue";
 import PrimarySettings from "@/components/account/PrimarySettings.vue";
-import SecondarySettings from "@/components/account/SecondarySettings.vue";
-import { mapGetters } from "vuex";
+import TutorSettings from "@/components/account/TutorSettings.vue";
+// import { apiRequest } from "@/services/api.service.js";
 
 export default {
   name: "Settings",
   path: "/settings",
   permisions: {
-    roles: "ALL",
+    roles: ["ROLE_STUDENT"],
+    redirect: "LogIn",
   },
   components: {
     Subheader,
     PrimarySettings,
-    SecondarySettings,
+    TutorSettings,
   },
-  computed: mapGetters(["getStatus"]),
+  computed: {
+    roles: function() {
+      return this.$store.getters["auth/roles"];
+    },
+  },
+  data() {
+    return {
+      data: {},
+      isUpdating: false,
+    };
+  },
+  mounted() {
+    this.getUserDetails();
+  },
+  methods: {
+    async getUserDetails() {
+      this.data = await this.$store
+        .dispatch("account/getUserDetails")
+        .then((r) => r.data);
+    },
+    async updateUserDetails(data) {
+      if (this.isUpdating) return;
+      this.isUpdating = true;
+      await this.$store.dispatch("account/updateUserDetails", { data });
+      this.isUpdating = false;
+    },
+  },
 };
 </script>
 
@@ -46,3 +77,4 @@ export default {
   margin-top: 3rem;
 }
 </style>
+
