@@ -1,8 +1,8 @@
 import store from "@/store";
 import { vm } from "@/main";
 import router from "@/router";
-import { firestore } from "@/firebase.js";
-import { config, constraints } from "@/constants/peer-connection.js";
+import { firestore } from "@/firebase";
+import { config, constraints } from "@/constants/peer-connection";
 
 import Caller from "@/store/modules/conference/caller";
 import Callee from "@/store/modules/conference/callee";

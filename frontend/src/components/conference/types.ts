@@ -1,4 +1,4 @@
-import { firestore } from "@/firebase.js";
+import { firestore } from "@/firebase";
 
 export interface IsToggled {
   [index: string]: { [index: string]: boolean };
@@ -204,4 +204,39 @@ export interface HorizontalSwipe {
 export interface isDirectionToggled {
   towards: boolean;
   from: boolean;
+}
+
+export interface PeerConnectionConfig {
+  iceServers: IceServer[];
+  iceCandidatePoolSize: number;
+}
+
+interface IceServer {
+  urls: string[];
+}
+
+export interface MediaConstraints {
+  video: MediaTrackConstraints;
+  audio: MediaTrackConstraints;
+}
+
+type MediaTrackConstraints = boolean | ConstraintsObject;
+
+interface ConstraintsObject {
+  width?: number;
+  height?: number;
+
+  min?: number;
+  ideal?: number;
+  max?: number;
+
+  faceingMode?: FaceingMode | { exact: FaceingMode };
+
+  deviceId?: string | { exact: string };
+}
+
+type FaceingMode = "user" | "environment" | "left" | "right";
+
+export interface RTCDataChannelOverride {
+  ordered: boolean;
 }

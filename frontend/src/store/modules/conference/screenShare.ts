@@ -1,5 +1,5 @@
 import store from "@/store";
-import { constraints } from "@/constants/peer-connection.js";
+import { constraints } from "@/constants/peer-connection";
 
 import Main from "@/store/modules/conference/main";
 import ToggleStore from "@/store/modules/conference/toggleStore";

@@ -1,5 +1,5 @@
 import store from "@/store";
-import { db, firestore } from "@/firebase.js";
+import { db, firestore } from "@/firebase";
 
 import Main from "@/store/modules/conference/main";
 import Chat from "@/store/modules/conference/chat";
